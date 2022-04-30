@@ -2,7 +2,7 @@
 # License: MIT. See license file in root directory
 # Copyright(c) JetsonHacks (2017-2019)
 
-OPENCV_VERSION=4.1.1
+OPENCV_VERSION=4.2.0
 # Jetson Nano
 ARCH_BIN=5.3
 INSTALL_DIR=/usr/local
@@ -102,7 +102,7 @@ sudo apt-get install -y \
 
 # We will be supporting OpenGL, we need a little magic to help
 # https://devtalk.nvidia.com/default/topic/1007290/jetson-tx2/building-opencv-with-opengl-support-/post/5141945/#5141945
-cd /usr/local/cuda/include
+cd /usr/local/cuda-10.0/include
 sudo patch -N cuda_gl_interop.h $WHEREAMI'/patches/OpenGLHeader.patch' 
 
 # Python 2.7
@@ -150,6 +150,8 @@ cd build
 
 echo $PWD
 time cmake -D CMAKE_BUILD_TYPE=RELEASE \
+      -D CMAKE_C_COMPILER=gcc-7 \
+      -D CMAKE_CXX_COMPILER=g++-7 \
       -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
       -D WITH_CUDA=ON \
       -D CUDA_ARCH_BIN=${ARCH_BIN} \
